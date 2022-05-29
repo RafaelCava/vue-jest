@@ -1,13 +1,16 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
+    <Lance />
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineAsyncComponent, defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'HomeView'
+  name: 'HomeView',
+  components: {
+    Lance: defineAsyncComponent(() => import('@/components/Lance.vue'))
+  }
 })
 </script>

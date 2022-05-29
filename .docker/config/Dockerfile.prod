@@ -1,0 +1,27 @@
+FROM node:16-alpine3.15 as build
+
+WORKDIR /usr/vue-jest/app
+
+RUN yarn global add @nestjs/cli
+
+COPY package.json .
+
+RUN yarn install
+
+COPY . .
+
+RUN yarn build
+
+FROM node:16-alpine3.15
+
+WORKDIR /usr/vue-jest/app
+
+COPY --from=build /usr/vue-jest/app/node_modules ./node_modules
+COPY --from=build /usr/vue-jest/app/dist ./dist
+COPY --from=build /usr/vue-jest/app/package.json ./package.json
+
+USER node
+
+EXPOSE 3011 3000
+
+ENTRYPOINT [ "yarn", "start:prod" ]

@@ -1,0 +1,19 @@
+version: '3.7'
+
+services:
+  vue-jest:
+    build:
+      context: .
+      dockerfile: ./.docker/config/Dockerfile
+    entrypoint: ./.docker/entrypoint.sh
+    ports:
+     - 8080:8080
+    container_name: vue-jest
+    volumes:
+      - .:/usr/vue-jest/app
+    networks:
+     - vue-jest
+networks:
+  vue-jest:
+   driver: bridge
+
